@@ -17,10 +17,24 @@ typedef struct		s_lst
 	int				y;
 	int				x;
 	char			*links;
+	char			**llinks;
+	int				*cost;
+	int				value;
+	//int				new_val;
+	int				amount;
 	int				place;
 	int				ants;
 	struct s_lst	*all;
 	struct s_lst	*next;
+	struct s_lst	**gr;
 }					t_lst;
+
+
+void	org_links(t_lst **start);
+int		ft_abs(int x);
+void	set_costs(t_lst **start);
+void	graph_links(t_lst **start);
+void	algo(t_lst **start);
+void	recu_alg(t_lst **p, char **path, int *i);
 
 #endif

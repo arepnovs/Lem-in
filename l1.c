@@ -49,6 +49,8 @@ t_lst	*new_lst(t_lst *start, char *name, int flag, char *line)
 	new->name = ft_strjoin(new->name, name);
 	new->place = flag;
 	new->ants = 0;
+	new->amount = 0;
+	new->value = (flag == 1) ? 0 : 9999999;
 	new->links = ft_strnew(0);
 	new->y = get_coord(line, 1);
 	new->x = get_coord(line, 2);
@@ -109,6 +111,7 @@ void	set_links(t_lst **start, char *name, char *s_name)
 		{
 			p->links = ft_strjoin(p->links, s_name);
 			p->links = ft_charjoin(p->links, '|');
+			p->amount++;
 		}
 		p = p->next;
 	}
@@ -165,15 +168,39 @@ int		main(void)
 			get_links(&start, line);
 		else if (ft_strchr(line, ' ') == NULL && line[0] >= '0' && line[0] <= '9')
 			ants = ft_atoi(line);
+		else if (line[0] == 'b')
+			break;
 		free(line);
 	}
 	set_ants(&start, ants);
 	add_all(&start);
+	org_links(&start);
+	graph_links(&start);
+	set_costs(&start);
+	algo(&start);
 	p = start->all;
 	printf("ants = %d\n", ants);
 	while(p)
 	{
-		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s\n", p->name, p->y, p->x, p->place, p->ants, p->links);
+		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s, value = %d, amount = %d\n", 
+			p->name, p->y, p->x, p->place, p->ants, p->links, p->value, p->amount);
+		p = p->next;
+	}
+	int i;
+	t_lst *p1;
+	//write(1, "AAA\n", 4);
+	p = start;
+	p1 = *p->gr;
+	while(p)
+	{
+		i = 0;
+		while(i < p->amount)
+		{
+			printf("name = %s\n", p->gr[i]->name);
+			i++;
+		}
+		//p1 = p1->next;
+		printf("--------\n");		
 		p = p->next;
 	}
 	return (0);
