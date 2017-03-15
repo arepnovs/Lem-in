@@ -14,6 +14,7 @@
 typedef struct		s_lst
 {
 	char			*name;
+	int 			pos;
 	int				y;
 	int				x;
 	char			*links;
@@ -24,9 +25,11 @@ typedef struct		s_lst
 	int				amount;
 	int				place;
 	int				ants;
+	int				was_here;
+	int 			finish;
 	struct s_lst	*all;
 	struct s_lst	*next;
-	struct s_lst	**gr;
+	//struct s_lst	**gr;
 }					t_lst;
 
 
@@ -35,6 +38,14 @@ int		ft_abs(int x);
 void	set_costs(t_lst **start);
 void	graph_links(t_lst **start);
 void	algo(t_lst **start);
-void	recu_alg(t_lst **p, char **path, int *i);
+void	recu_alg(t_lst *p, char **path, int *i);
+t_lst 	*org_path(t_lst **start);
+void	recu(t_lst *p1, t_lst *p2, char **path, int *j);
+int		check_end(t_lst *start);
+int		check_finish(t_lst *start, char *links);
+void	pathfind(t_lst **start);
+int		list_len(t_lst *start);
+void	matrix(t_lst **start);
+
 
 #endif

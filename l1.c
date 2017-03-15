@@ -49,6 +49,7 @@ t_lst	*new_lst(t_lst *start, char *name, int flag, char *line)
 	new->name = ft_strjoin(new->name, name);
 	new->place = flag;
 	new->ants = 0;
+	new->was_here = 0;
 	new->amount = 0;
 	new->value = (flag == 1) ? 0 : 9999999;
 	new->links = ft_strnew(0);
@@ -173,20 +174,24 @@ int		main(void)
 		free(line);
 	}
 	set_ants(&start, ants);
-	add_all(&start);
+	//add_all(&start);
 	org_links(&start);
-	graph_links(&start);
-	set_costs(&start);
-	algo(&start);
-	p = start->all;
+	start = org_path(&start);
+	add_all(&start);
+	matrix(&start);
+	//graph_links(&start);
+	//set_costs(&start);
+	//algo(&start);
+	//pathfind(&start);
+	p = start;
 	printf("ants = %d\n", ants);
 	while(p)
 	{
-		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s, value = %d, amount = %d\n", 
-			p->name, p->y, p->x, p->place, p->ants, p->links, p->value, p->amount);
+		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s, value = %d, amount = %d, pos = %d\n", 
+			p->name, p->y, p->x, p->place, p->ants, p->links, p->value, p->amount, p->pos);
 		p = p->next;
 	}
-	int i;
+	/*int i;
 	t_lst *p1;
 	//write(1, "AAA\n", 4);
 	p = start;
@@ -202,7 +207,7 @@ int		main(void)
 		//p1 = p1->next;
 		printf("--------\n");		
 		p = p->next;
-	}
+	}*/
 	return (0);
 }
 
