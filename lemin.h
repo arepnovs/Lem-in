@@ -10,10 +10,12 @@
 # define BLUE   "\x1B[34m"
 # define GREEN  "\x1B[32m"
 # define RESET  "\x1B[0m"
+#define N 8
 
 typedef struct		s_lst
 {
 	char			*name;
+	int				vert;
 	int 			pos;
 	int				y;
 	int				x;
@@ -32,6 +34,12 @@ typedef struct		s_lst
 	//struct s_lst	**gr;
 }					t_lst;
 
+typedef struct		s_dfs
+{
+	int				indx;
+	int				*path;
+	int				*visited;
+}					t_dfs;
 
 void	org_links(t_lst **start);
 int		ft_abs(int x);
@@ -46,6 +54,9 @@ int		check_finish(t_lst *start, char *links);
 void	pathfind(t_lst **start);
 int		list_len(t_lst *start);
 void	matrix(t_lst **start);
+void 	dfs_rec (int **matrix, t_lst *start);
+void printPath(int src, int dest, t_dfs *path, int **matrix);
+void print_stack_elements (int indx, int path[N]);
 
 
 #endif

@@ -52,6 +52,7 @@ void	matrix(t_lst **start)
 	p1 = *start;
 	p2 = p1->all;
 	len = list_len(*start);
+	p1->vert = len;
 	matrix = (int**)malloc(sizeof(int*) * len);
 	i = 0;
 	while (i < len)
@@ -61,7 +62,8 @@ void	matrix(t_lst **start)
 		matrix[i] = get_row(*start, i, len);
 		i++;
 	}
-	i = 0;
+	dfs_rec(matrix, p1);
+	/*i = 0;
 	while (i < len)
 	{
 		j = 0;
@@ -72,5 +74,5 @@ void	matrix(t_lst **start)
 		}
 		printf("\n");
 		i++;
-	}
+	}*/
 }

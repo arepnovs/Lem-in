@@ -174,7 +174,6 @@ int		main(void)
 		free(line);
 	}
 	set_ants(&start, ants);
-	//add_all(&start);
 	org_links(&start);
 	start = org_path(&start);
 	add_all(&start);
