@@ -37,9 +37,28 @@ typedef struct		s_lst
 typedef struct		s_dfs
 {
 	int				indx;
+	int 			dest;
 	int				*path;
+	int				**all_paths;
+	int				**best_paths;
+	int				amount;
 	int				*visited;
+	int				i;
+	int 			vert;
 }					t_dfs;
+
+typedef struct		s_pt
+{
+	char			*name;
+	int				ant;
+	struct s_pt		*prev;
+	struct s_pt		*next;
+}					t_pt;
+
+/*typedef struct		s_all
+{
+	t_pt			**all;
+}					t_all;*/
 
 void	org_links(t_lst **start);
 int		ft_abs(int x);
@@ -54,9 +73,14 @@ int		check_finish(t_lst *start, char *links);
 void	pathfind(t_lst **start);
 int		list_len(t_lst *start);
 void	matrix(t_lst **start);
-void 	dfs_rec (int **matrix, t_lst *start);
+void 	dfs_rec (int **matrix, t_lst *start, t_dfs *path);
 void printPath(int src, int dest, t_dfs *path, int **matrix);
-void print_stack_elements (int indx, int path[N]);
+void print_stack_elements (int indx, int *way, t_dfs *path);
+void  recucu(int **matrix, t_lst *start);
+int 	path_len(int *path, int dest);
+void choose_path(t_dfs *path, t_lst *start);
+void	print_path(t_lst *start, t_dfs *path);
+void	print_path(t_lst *start, t_dfs *path);
 
 
 #endif

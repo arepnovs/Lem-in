@@ -62,7 +62,7 @@ void	matrix(t_lst **start)
 		matrix[i] = get_row(*start, i, len);
 		i++;
 	}
-	dfs_rec(matrix, p1);
+	recucu(matrix, p1);
 	/*i = 0;
 	while (i < len)
 	{

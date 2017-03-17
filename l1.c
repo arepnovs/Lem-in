@@ -124,7 +124,7 @@ void	get_links(t_lst **start, char *line)
 	char	*s_name;
 	char	*line2;
 
-	line2 = strdup(line);
+	line2 = ft_strdup(line);
 	name = get_name(line, '-');
 	s_name = get_name(line2, 'z');
 	set_links(start, name, s_name);
@@ -178,16 +178,12 @@ int		main(void)
 	start = org_path(&start);
 	add_all(&start);
 	matrix(&start);
-	//graph_links(&start);
-	//set_costs(&start);
-	//algo(&start);
-	//pathfind(&start);
 	p = start;
 	printf("ants = %d\n", ants);
 	while(p)
 	{
-		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s, value = %d, amount = %d, pos = %d\n", 
-			p->name, p->y, p->x, p->place, p->ants, p->links, p->value, p->amount, p->pos);
+		printf("name = %s, (%d, %d), place = %d, ant = %d, links = %s, amount = %d, pos = %d\n", 
+			p->name, p->y, p->x, p->place, p->ants, p->links, p->amount, p->pos);
 		p = p->next;
 	}
 	/*int i;
@@ -210,6 +206,10 @@ int		main(void)
 	return (0);
 }
 
+/*1 4 11
+0 12 13 11
+0 2 6 8 11
+0 3 9 10 11*/
 
 
 
