@@ -51,7 +51,7 @@ void	matrix(t_lst **start)
 
 	p1 = *start;
 	p2 = p1->all;
-	len = list_len(*start);
+	len = lst_len(*start);
 	p1->vert = len;
 	matrix = (int**)malloc(sizeof(int*) * len);
 	i = 0;

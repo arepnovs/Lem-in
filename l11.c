@@ -80,10 +80,12 @@ void choose_path(t_dfs *path, t_lst *start)
 		j++;
 	}
 	path->amount = j;
-	print_path(start, path);
+	//print_path(start, path);
+	ppath_path(start, path);
+
   int f = 0;
   int g;
-  /*printf("------------------------------------\n");
+  printf("------------------------------------\n");
   while (f < j)
   {
     g = 0;
@@ -95,5 +97,5 @@ void choose_path(t_dfs *path, t_lst *start)
     f++;
     printf("\n");
   }
-  printf("------------------------------------\n");*/
+  printf("------------------------------------\n");
 }

@@ -60,7 +60,7 @@ int		ft_abs(int x)
 		return(x);
 }
 
-int		list_len(t_lst *start)
+int		lst_len(t_lst *start)
 {
 	int i;
 

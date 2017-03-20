@@ -23,7 +23,7 @@ typedef struct		s_lst
 	char			**llinks;
 	int				*cost;
 	int				value;
-	//int				new_val;
+	//int			new_val;
 	int				amount;
 	int				place;
 	int				ants;
@@ -41,24 +41,25 @@ typedef struct		s_dfs
 	int				*path;
 	int				**all_paths;
 	int				**best_paths;
+	//int 			**ant_paths;
 	int				amount;
 	int				*visited;
 	int				i;
 	int 			vert;
+	int 			all_len;
 }					t_dfs;
 
 typedef struct		s_pt
 {
 	char			*name;
-	int				ant;
+	int 			len;
+	int				ant_num;
+	int				if_ant;
+	int 			full;
 	struct s_pt		*prev;
 	struct s_pt		*next;
 }					t_pt;
 
-/*typedef struct		s_all
-{
-	t_pt			**all;
-}					t_all;*/
 
 void	org_links(t_lst **start);
 int		ft_abs(int x);
@@ -71,16 +72,19 @@ void	recu(t_lst *p1, t_lst *p2, char **path, int *j);
 int		check_end(t_lst *start);
 int		check_finish(t_lst *start, char *links);
 void	pathfind(t_lst **start);
-int		list_len(t_lst *start);
+int		lst_len(t_lst *start);
 void	matrix(t_lst **start);
 void 	dfs_rec (int **matrix, t_lst *start, t_dfs *path);
-void printPath(int src, int dest, t_dfs *path, int **matrix);
-void print_stack_elements (int indx, int *way, t_dfs *path);
-void  recucu(int **matrix, t_lst *start);
+void 	printPath(int src, int dest, t_dfs *path, int **matrix);
+void 	print_stack_elements (int indx, int *way, t_dfs *path);
+void  	recucu(int **matrix, t_lst *start);
 int 	path_len(int *path, int dest);
-void choose_path(t_dfs *path, t_lst *start);
+void 	choose_path(t_dfs *path, t_lst *start);
 void	print_path(t_lst *start, t_dfs *path);
 void	print_path(t_lst *start, t_dfs *path);
+int		pt_len(t_pt *start);
+void	ppath_path(t_lst *start, t_dfs *path);
+int 	ppath_len(int *path, int dest);
 
 
 #endif

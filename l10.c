@@ -20,14 +20,12 @@ void print_stack_elements(int indx, int *way, t_dfs *path)
   while (i < indx)
   {
     path->all_paths[path->i][i] = way[i];
-    //printf ("%d ", way[i]);
     i++;
   }
   path->i++;
-  //printf ("\n");
 }
  
-void printPath(int start, int dest, t_dfs *path, int **matrix)
+void remember_path(int start, int dest, t_dfs *path, int **matrix)
 {
   int i;
   path->visited[start] = 1;
@@ -42,7 +40,7 @@ void printPath(int start, int dest, t_dfs *path, int **matrix)
       while (i < path->vert)
       {
         if (path->visited[i] == 0 && matrix[start][i])
-          printPath (i, dest, path, matrix);
+          remember_path(i, dest, path, matrix);
         i++;
       }
     }
@@ -53,7 +51,7 @@ void printPath(int start, int dest, t_dfs *path, int **matrix)
 void dfs_rec(int **matrix, t_lst *start, t_dfs *path)
 {
   ft_memset (path->visited, 0, sizeof (path->visited));
-  printPath (0, path->dest, path, matrix);
+  remember_path(0, path->dest, path, matrix);
 }
 
 void  recucu(int **matrix, t_lst *start)

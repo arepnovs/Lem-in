@@ -173,6 +173,7 @@ int		main(void)
 			break;
 		free(line);
 	}
+	start->ants = ants;
 	set_ants(&start, ants);
 	org_links(&start);
 	start = org_path(&start);
