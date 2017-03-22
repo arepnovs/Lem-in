@@ -1,13 +1,25 @@
-#include "lemin.h" 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   l11.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/22 12:35:50 by arepnovs          #+#    #+#             */
+/*   Updated: 2017/03/22 12:38:22 by arepnovs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int 	path_len(int *path, int dest)
+#include "lemin.h"
+
+int		path_len(int *path, int dest)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (path[i] != dest)
 		i++;
-	return(i);
+	return (i + 1);
 }
 
 int		check_rep(int *a, int **b, int p, int dest)
@@ -26,17 +38,17 @@ int		check_rep(int *a, int **b, int p, int dest)
 			while (b[k][j] != dest)
 			{
 				if (a[i] == b[k][j])
-					return(0);
+					return (0);
 				j++;
 			}
 			i++;
 		}
 		k++;
 	}
-	return(1);
+	return (1);
 }
 
-void choose_path(t_dfs *path, t_lst *start)
+void	choose_path(t_dfs *p, t_lst *start)
 {
 	int i;
 	int j;
@@ -46,14 +58,13 @@ void choose_path(t_dfs *path, t_lst *start)
 	i = 0;
 	j = 0;
 	new_len = 100000;
-	path->best_paths = (int**)malloc(sizeof(int*) * path->i);
-	while (i < path->i)
+	p->best_paths = (int**)malloc(sizeof(int*) * p->i);
+	while (i < p->i)
 	{
-		if ((len = path_len(path->all_paths[i], path->dest)) < new_len)
+		if ((len = path_len(p->all_paths[i], p->dest)) < new_len)
 		{
 			new_len = len;
-			path->best_paths[j] = (int*)malloc(sizeof(int) * new_len);
-			path->best_paths[j] = path->all_paths[i];
+			p->best_paths[j] = p->all_paths[i];
 		}
 		i++;
 	}
@@ -62,40 +73,22 @@ void choose_path(t_dfs *path, t_lst *start)
 	{
 		i = 0;
 		new_len = 100000;
-		while (i < path->i)
+		while (i < p->i)
 		{
-			if (path->all_paths[i][1] != path->best_paths[j - 1][1]
-				&& check_rep(path->all_paths[i], path->best_paths, j, path->dest) != 0
-				&& (len = path_len(path->all_paths[i], path->dest)) < new_len)
+			if (p->all_paths[i][1] != p->best_paths[j - 1][1]
+				&& check_rep(p->all_paths[i], p->best_paths, j, p->dest) != 0
+				&& (len = path_len(p->all_paths[i], p->dest)) < new_len)
 			{
 				if (j)
-				new_len = len;
-				path->best_paths[j] = (int*)malloc(sizeof(int) * new_len);
-				path->best_paths[j] = path->all_paths[i];
+					new_len = len;
+				p->best_paths[j] = p->all_paths[i];
 			}
 			i++;
 		}
-		if (!path->best_paths[j])
-			break;
+		if (!p->best_paths[j])
+			break ;
 		j++;
 	}
-	path->amount = j;
-	//print_path(start, path);
-	ppath_path(start, path);
-
-  int f = 0;
-  int g;
-  printf("------------------------------------\n");
-  while (f < j)
-  {
-    g = 0;
-    while (path->best_paths[f][g - 1] != path->dest)
-    {
-      printf("%d ", path->best_paths[f][g]);
-      g++;
-    }
-    f++;
-    printf("\n");
-  }
-  printf("------------------------------------\n");
+	p->amount = j;
+	print_path(start, p);
 }

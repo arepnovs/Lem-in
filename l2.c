@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   l2.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/22 12:24:45 by arepnovs          #+#    #+#             */
+/*   Updated: 2017/03/22 12:25:24 by arepnovs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lemin.h"
 
 void	org_links(t_lst **start)
@@ -5,18 +17,17 @@ void	org_links(t_lst **start)
 	t_lst *p;
 
 	p = *start;
-	while(p)
+	while (p)
 	{
 		p->llinks = ft_strsplit(p->links, '|');
-		//ft_strdel(&(p->links));
 		p = p->next;
 	}
 }
 
 void	org_pos(t_lst **start)
 {
-	t_lst *p;
-	int i;
+	t_lst	*p;
+	int		i;
 
 	i = 0;
 	p = *start;
@@ -49,15 +60,7 @@ t_lst	*org_path(t_lst **start)
 		p3->next = p2;
 	}
 	org_pos(start);
-	return(*start);
-}
-
-int		ft_abs(int x)
-{
-	if (x < 0)
-		return(-x);
-	else
-		return(x);
+	return (*start);
 }
 
 int		lst_len(t_lst *start)
@@ -65,38 +68,23 @@ int		lst_len(t_lst *start)
 	int i;
 
 	i = 0;
-	while(start)
+	while (start)
 	{
 		i++;
 		start = start->next;
 	}
-	return(i);
+	return (i);
 }
 
-void	set_costs(t_lst **start)
+void	set_ants(t_lst **start, int ants)
 {
-	t_lst *p1;
-	t_lst *p2;
-	int i;
+	t_lst *p;
 
-	p1 = *start;
-	p2 = p1->all;
-	while(p1)
+	p = *start;
+	while (p)
 	{
-		p1->cost = (int*)malloc(sizeof(int) * p1->amount + 1);
-		i = 0;
-		while(p2 && i < p1->amount)
-		{
-			if (strcmp(p1->llinks[i], p2->name) == 0)
-			{
-				p1->cost[i] = (ft_abs(p1->x - p2->x) + ft_abs(p1->y - p2->y));
-				i++;
-				p2 = p1->all;
-			}
-			else
-				p2 = p2->next;
-		}
-		p2 = p1->all;
-		p1 = p1->next;
+		if (p->place == 1)
+			p->ants = ants;
+		p = p->next;
 	}
 }

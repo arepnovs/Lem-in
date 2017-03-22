@@ -17,21 +17,12 @@ typedef struct		s_lst
 	char			*name;
 	int				vert;
 	int 			pos;
-	int				y;
-	int				x;
 	char			*links;
 	char			**llinks;
-	int				*cost;
-	int				value;
-	//int			new_val;
 	int				amount;
 	int				place;
 	int				ants;
-	int				was_here;
-	int 			finish;
-	struct s_lst	*all;
 	struct s_lst	*next;
-	//struct s_lst	**gr;
 }					t_lst;
 
 typedef struct		s_dfs
@@ -41,7 +32,6 @@ typedef struct		s_dfs
 	int				*path;
 	int				**all_paths;
 	int				**best_paths;
-	//int 			**ant_paths;
 	int				amount;
 	int				*visited;
 	int				i;
@@ -49,42 +39,37 @@ typedef struct		s_dfs
 	int 			all_len;
 }					t_dfs;
 
-typedef struct		s_pt
-{
-	char			*name;
-	int 			len;
-	int				ant_num;
-	int				if_ant;
-	int 			full;
-	struct s_pt		*prev;
-	struct s_pt		*next;
-}					t_pt;
 
-
+//l1.c
+char	*get_name(char *line, char f);
+t_lst	*new_lst(t_lst *start, char *name, int flag);
+void	create_list(t_lst **start, char *line, int flag);
+void	set_links(t_lst **start, char *name, char *s_name);
+void	get_links(t_lst **start, char *line);
+int		main(void);
+//l2.c
 void	org_links(t_lst **start);
-int		ft_abs(int x);
-void	set_costs(t_lst **start);
-void	graph_links(t_lst **start);
-void	algo(t_lst **start);
-void	recu_alg(t_lst *p, char **path, int *i);
-t_lst 	*org_path(t_lst **start);
-void	recu(t_lst *p1, t_lst *p2, char **path, int *j);
-int		check_end(t_lst *start);
-int		check_finish(t_lst *start, char *links);
-void	pathfind(t_lst **start);
+void	org_pos(t_lst **start);
+t_lst	*org_path(t_lst **start);
 int		lst_len(t_lst *start);
+void	set_ants(t_lst **start, int ants);
+//l4.c
+int 	row_char(int i, t_lst *p, t_lst *start);
+int		*get_row(t_lst *start, int pos, int len);
 void	matrix(t_lst **start);
-void 	dfs_rec (int **matrix, t_lst *start, t_dfs *path);
-void 	printPath(int src, int dest, t_dfs *path, int **matrix);
-void 	print_stack_elements (int indx, int *way, t_dfs *path);
-void  	recucu(int **matrix, t_lst *start);
+//l10.c
+int   loc_dest(t_lst *start);
+void  get_stack_elements(int indx, int *way, t_dfs *path);
+void remember_path(int start, int dest, t_dfs *path, int **matrix);
+void  all_paths_search(int **matrix, t_lst *start);
+//l11.c
+void choose_path(t_dfs *path, t_lst *start);
+int		check_rep(int *a, int **b, int p, int dest);
 int 	path_len(int *path, int dest);
-void 	choose_path(t_dfs *path, t_lst *start);
+//l13.c
+int		*all_len(int **p, t_dfs *path);
+int 	**dup_zero(int **p, t_dfs *path);
+char 	*gets_name(t_lst *start, int place);
 void	print_path(t_lst *start, t_dfs *path);
-void	print_path(t_lst *start, t_dfs *path);
-int		pt_len(t_pt *start);
-void	ppath_path(t_lst *start, t_dfs *path);
-int 	ppath_len(int *path, int dest);
-
 
 #endif
