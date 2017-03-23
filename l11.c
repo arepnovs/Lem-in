@@ -91,4 +91,23 @@ void	choose_path(t_dfs *p, t_lst *start)
 	}
 	p->amount = j;
 	print_path(start, p);
+	//sleep(20);
+
+	/*int f = 0;
+	char *name;
+   int g;
+   printf("------------------------------------\n");
+   while (f < j)
+   {
+     g = 0;
+     while (p->best_paths[f][g - 1] != p->dest)
+     {
+     	name = gets_name(start, p->best_paths[f][g]);
+       printf("%s ", name);
+       g++;
+     }
+    f++;
+    printf("\n");
+   }
+   printf("------------------------------------\n");*/
 }

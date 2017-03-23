@@ -41,7 +41,7 @@ typedef struct		s_dfs
 
 
 //l1.c
-char	*get_name(char *line, char f);
+//char	*get_name(char *line, char f);
 t_lst	*new_lst(t_lst *start, char *name, int flag);
 void	create_list(t_lst **start, char *line, int flag);
 void	set_links(t_lst **start, char *name, char *s_name);

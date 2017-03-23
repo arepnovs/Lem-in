@@ -75,10 +75,12 @@ void	all_paths_search(int **matrix, t_lst *start)
 	path.i = 0;
 	ft_memset(path.visited, 0, sizeof(path.visited));
 	remember_path(0, path.dest, &path, matrix);
-  while (++i < start->vert)
-  {
-    free(matrix[i]);
-    //i++;
-  }
-	choose_path(&path, start);
+  /*while (++i < start->vert)
+    free(matrix[i]);*/
+  if (path.all_paths[0])
+     choose_path(&path, start);
+  else
+    printf("!!!!!!!!!!No path!!!!!!!!!!!!!!\n");
+  //sleep(20);
+
 }

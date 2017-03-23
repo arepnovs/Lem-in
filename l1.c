@@ -15,6 +15,8 @@
 char	*get_name(char *line, char f)
 {
 	char *t;
+	char *name;
+	char *s_name;
 
 	if (f == ' ' || f == '-')
 	{
@@ -51,6 +53,7 @@ t_lst	*new_lst(t_lst *start, char *name, int flag)
 void	create_list(t_lst **start, char *line, int flag)
 {
 	char	*name;
+	char    *line_dup;
 	t_lst	*p;
 
 	name = get_name(line, ' ');
@@ -68,7 +71,6 @@ void	create_list(t_lst **start, char *line, int flag)
 			}
 			p = p->next;
 		}
-		p->next = new_lst(*start, name, flag);
 	}
 	ft_strdel(&name);
 }
@@ -76,14 +78,22 @@ void	create_list(t_lst **start, char *line, int flag)
 void	set_links(t_lst **start, char *name, char *s_name)
 {
 	t_lst *p;
+	char *t;
+	char *l;
 
 	p = *start;
 	while (p)
 	{
 		if (ft_strcmp(name, p->name) == 0)
 		{
+			t = p->links;
+			//l = s_name;
 			p->links = ft_strjoin(p->links, s_name);
+			free(t);
+			//free(l);
+			t = p->links;
 			p->links = ft_charjoin(p->links, '|');
+			free(t);
 			p->amount++;
 		}
 		p = p->next;
@@ -99,47 +109,70 @@ void	get_links(t_lst **start, char *line)
 	line2 = ft_strdup(line);
 	name = get_name(line, '-');
 	s_name = get_name(line2, 'z');
+	
 	set_links(start, name, s_name);
 	set_links(start, s_name, name);
+	ft_strdel(&line2);
+	ft_strdel(&name);
 }
 
-void	free_lst(t_lst **start)
+/*int	start_end_check(char **line)
 {
-	t_lst *p;
-	int i;
-
-	i = 0;
-	p = *start;
-	while (p)
-	{
-		ft_strdel(&(p->name));
-		ft_strdel(&(p->links));
-		while (i < p->amount)
+	if (line[0][2] == 's')
 		{
-			free(p->llinks[i]);
-			i++;
+			while (line[0][0] == '#' || !ft_strchr(*line, ' '))
+			{
+				free(*line);
+				get_next_line(0, line);
+				if (line[0][0] == '#' || !ft_strchr(*line, ' '))
+				{
+					printf("%s\n", *line);
+					free(*line);
+				}
+			}
+			printf("%s\n", *line);
+			return(1);
+			//create_list(&start, line, 1);
 		}
-		free(p->llinks);
-		free(p);
-		p = p->next;
-	}
-}
+		else
+		{
+			while (line[0][0] == '#' || !ft_strchr(*line, ' '))
+			{
+				free(*line);
+				get_next_line(0, line);
+				if (line[0][0] == '#' || !ft_strchr(*line, ' '))
+				{
+					printf("%s\n", *line);
+					free(*line);
+				}
+			}
+			printf("%s\n", *line);
+			return(9);
+			//create_list(&start, line, 9);
+		}
+}*/
 
 int		main(void)
 {
 	char	*line;
 	t_lst	*start;
-	t_lst	*p;
 	int		ants;
 	int		ret;
+	int f;
 
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		printf("%s\n", line);
+		/*if (line[1] == '#' && (line[2] == 's' || line[2] == 'e'))
+		{
+			f = start_end_check(&line);
+			create_list(&start, line, f);
+		}*/
 		if (line[2] == 's' && line[1] == '#')
 		{
 			while (line[0] == '#' || !ft_strchr(line, ' '))
 			{
+				free(line);
 				get_next_line(0, &line);
 				if (line[0] == '#' || !ft_strchr(line, ' '))
 				{
@@ -154,6 +187,7 @@ int		main(void)
 		{
 			while (line[0] == '#' || !ft_strchr(line, ' '))
 			{
+				free(line);
 				get_next_line(0, &line);
 				if (line[0] == '#' || !ft_strchr(line, ' '))
 				{
@@ -172,13 +206,12 @@ int		main(void)
 			ants = ft_atoi(line);
 		else if (line[0] == 'b')
 			break ;
-		free(line);
+		ft_strdel(&line);
 	}
 	org_links(&start);
 	set_ants(&start, ants);
 	start = org_path(&start);
 	matrix(&start);
-	free_lst(&start);
-	sleep(30);
+	
 	return (0);
 }

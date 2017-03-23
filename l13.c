@@ -42,7 +42,7 @@ int		**dup_zero(int **p, t_dfs *path)
 		len = path_len(p[i], path->dest);
 		path->all_len = path->all_len + len;
 		ants[i] = (int *)malloc(sizeof(int) * len);
-		while (p[i][j - 1] != path->dest)
+		while (j != path->dest)
 		{
 			ants[i][j] = 0;
 			j++;
@@ -136,6 +136,7 @@ void	print_path(t_lst *start, t_dfs *path)
 		f = 0;
 		i = 0;
 	}
+	//sleep(20);
 	/*while (f < path->amount)
 	{
 		i = 0;
@@ -147,5 +148,6 @@ void	print_path(t_lst *start, t_dfs *path)
 		f++;
 	}
 	free(ants);*/
+
 	free_dfs(&path);
 }
