@@ -6,7 +6,7 @@
 /*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 12:34:40 by arepnovs          #+#    #+#             */
-/*   Updated: 2017/03/22 12:35:34 by arepnovs         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:05:39 by arepnovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void	remember_path(int start, int dest, t_dfs *path, int **matrix)
 void	all_paths_search(int **matrix, t_lst *start)
 {
 	t_dfs	path;
-  int i;
 
-  i = -1;
 	path.dest = loc_dest(start);
 	path.vert = start->vert;
 	path.path = (int*)malloc(sizeof(int) * start->vert);
@@ -75,12 +73,10 @@ void	all_paths_search(int **matrix, t_lst *start)
 	path.i = 0;
 	ft_memset(path.visited, 0, sizeof(path.visited));
 	remember_path(0, path.dest, &path, matrix);
-  /*while (++i < start->vert)
-    free(matrix[i]);*/
-  if (path.all_paths[0])
-     choose_path(&path, start);
-  else
-    printf("!!!!!!!!!!No path!!!!!!!!!!!!!!\n");
-  //sleep(20);
-
+	if (path.all_paths[0])
+		choose_path(&path, start);//1 leaks
+	else
+		printf("Impossible to reach destination\n");
+  free_dfs(&path);
+  free(path.best_paths);
 }

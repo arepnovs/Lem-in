@@ -71,4 +71,8 @@ void	matrix(t_lst **start)
 	}
 	p1 = *start;
 	all_paths_search(matrix, p1);
+	i = -1;
+	while (++i < p1->vert)//works
+		free(matrix[i]);
+	free(matrix);
 }

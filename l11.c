@@ -6,7 +6,7 @@
 /*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 12:35:50 by arepnovs          #+#    #+#             */
-/*   Updated: 2017/03/22 12:38:22 by arepnovs         ###   ########.fr       */
+/*   Updated: 2017/03/24 16:27:48 by arepnovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ int		path_len(int *path, int dest)
 	while (path[i] != dest)
 		i++;
 	return (i + 1);
+}
+
+int		*all_len(int **p, t_dfs *path)
+{
+	int	i;
+	int	*p_len;
+
+	i = 0;
+	p_len = (int *)malloc(sizeof(int) * path->amount);
+	while (i < path->amount)
+	{
+		p_len[i] = path_len(p[i], path->dest) - 1;
+		i++;
+	}
+	return (p_len);
 }
 
 int		check_rep(int *a, int **b, int p, int dest)
@@ -48,27 +63,11 @@ int		check_rep(int *a, int **b, int p, int dest)
 	return (1);
 }
 
-void	choose_path(t_dfs *p, t_lst *start)
+void	choose_more_paths(t_lst *start, t_dfs *p, int j, int i)
 {
-	int i;
-	int j;
 	int len;
 	int new_len;
 
-	i = 0;
-	j = 0;
-	new_len = 100000;
-	p->best_paths = (int**)malloc(sizeof(int*) * p->i);
-	while (i < p->i)
-	{
-		if ((len = path_len(p->all_paths[i], p->dest)) < new_len)
-		{
-			new_len = len;
-			p->best_paths[j] = p->all_paths[i];
-		}
-		i++;
-	}
-	j++;
 	while (j < start->amount)
 	{
 		i = 0;
@@ -90,24 +89,30 @@ void	choose_path(t_dfs *p, t_lst *start)
 		j++;
 	}
 	p->amount = j;
-	print_path(start, p);
-	//sleep(20);
+	print_path(start, p); //1 leaks after*/
+}
 
-	/*int f = 0;
-	char *name;
-   int g;
-   printf("------------------------------------\n");
-   while (f < j)
-   {
-     g = 0;
-     while (p->best_paths[f][g - 1] != p->dest)
-     {
-     	name = gets_name(start, p->best_paths[f][g]);
-       printf("%s ", name);
-       g++;
-     }
-    f++;
-    printf("\n");
-   }
-   printf("------------------------------------\n");*/
+void	choose_path(t_dfs *p, t_lst *start)
+{
+	int i;
+	int j;
+	int len;
+	int new_len;
+
+	i = 0;
+	j = 0;
+	new_len = 100000;
+	p->best_paths = (int**)malloc(sizeof(int*) * p->i);
+	while (i < p->i)
+	{
+		if ((len = path_len(p->all_paths[i], p->dest)) < new_len)
+		{
+			new_len = len;
+			p->best_paths[j] = p->all_paths[i];
+		}
+		i++;
+	}
+	j++;
+	p->all_len = 0;
+	choose_more_paths(start, p, j, i);
 }

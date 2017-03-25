@@ -28,6 +28,7 @@ typedef struct		s_lst
 typedef struct		s_dfs
 {
 	int				indx;
+	int				ant;
 	int 			dest;
 	int				*path;
 	int				**all_paths;
@@ -35,18 +36,25 @@ typedef struct		s_dfs
 	int				amount;
 	int				*visited;
 	int				i;
+	int				l;
 	int 			vert;
 	int 			all_len;
 }					t_dfs;
 
 
 //l1.c
-//char	*get_name(char *line, char f);
 t_lst	*new_lst(t_lst *start, char *name, int flag);
 void	create_list(t_lst **start, char *line, int flag);
 void	set_links(t_lst **start, char *name, char *s_name);
-void	get_links(t_lst **start, char *line);
+int			start_end_read(char **line);
 int		main(void);
+//l3.c
+void		ft_exit(void);
+void		need_next_line(char **line);
+char		*get_name(char *line, char f);
+char	*restore_name(t_lst *start, int place);
+void		get_links(t_lst **start, char *line);
+
 //l2.c
 void	org_links(t_lst **start);
 void	org_pos(t_lst **start);
@@ -63,13 +71,16 @@ void  get_stack_elements(int indx, int *way, t_dfs *path);
 void remember_path(int start, int dest, t_dfs *path, int **matrix);
 void  all_paths_search(int **matrix, t_lst *start);
 //l11.c
-void choose_path(t_dfs *path, t_lst *start);
-int		check_rep(int *a, int **b, int p, int dest);
-int 	path_len(int *path, int dest);
-//l13.c
+int		path_len(int *path, int dest);
 int		*all_len(int **p, t_dfs *path);
+int		check_rep(int *a, int **b, int p, int dest);
+void	choose_more_paths(t_lst *start, t_dfs *p, int j, int i);
+void	choose_path(t_dfs *p, t_lst *start);
+//l13.c
 int 	**dup_zero(int **p, t_dfs *path);
-char 	*gets_name(t_lst *start, int place);
+void	free_dfs(t_dfs *path);
+int		print_move(int len, int **ants, t_dfs *path, t_lst *start);
+int 	actually_print_path(t_lst *start, t_dfs *path, int **ants, int *len);
 void	print_path(t_lst *start, t_dfs *path);
 
 #endif
