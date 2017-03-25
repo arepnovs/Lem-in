@@ -12,6 +12,33 @@
 
 #include "lemin.h"
 
+char	*get_name(char *line, char f)
+{
+	char *t;
+
+	if (f == ' ' || f == '-')
+	{
+		t = (f == ' ') ? ft_strchr(line, ' ') : ft_strchr(line, '-');
+		*t = '\0';
+		t++;
+		while (*t)
+		{
+			if ((*t < '0' || *t > '9') && *t != ' ' && f == ' ')
+				ft_exit(-1);
+			t++;
+		}
+		line = ft_strdup(line);
+		return (line);
+	}
+	else
+	{
+		t = ft_strchr(line, '-');
+		t++;
+		line = t;
+		return (line);
+	}
+}
+
 void	org_links(t_lst **start)
 {
 	t_lst *p;
@@ -61,19 +88,6 @@ t_lst	*org_path(t_lst **start)
 	}
 	org_pos(start);
 	return (*start);
-}
-
-int		lst_len(t_lst *start)
-{
-	int i;
-
-	i = 0;
-	while (start)
-	{
-		i++;
-		start = start->next;
-	}
-	return (i);
 }
 
 void	set_ants(t_lst **start, int ants)

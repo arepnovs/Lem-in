@@ -1,0 +1,123 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   l5.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/25 15:18:58 by arepnovs          #+#    #+#             */
+/*   Updated: 2017/03/25 15:19:45 by arepnovs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "lemin.h"
+
+void		put_move(int ant, char *name, int i)
+{
+	if (i == 0)
+		ft_putstr("\x1B[39m");
+	else if (i == 1)
+		ft_putstr("\x1B[32m");
+	else if (i == 2)
+		ft_putstr("\x1B[33m");
+	else if (i ==3)
+		ft_putstr("\x1B[31m");
+	else if (i == 4)
+		ft_putstr("\x1B[34m");
+	else if (i == 5)
+		ft_putstr("\x1B[35m");
+	else if (i == 6)
+		ft_putstr("\x1B[36m");
+	else if (i == 7)
+		ft_putstr("\x1B[37m");
+	else if (i == 8)
+		ft_putstr("\x1B[38m");
+	ft_putstr("L");
+	ft_putnbr(ant);
+	ft_putstr("->");
+	ft_putstr(name);
+	ft_putstr(" ");
+	ft_putstr("\x1B[0m");
+}
+
+t_lst		*new_lst(char *name, int flag)
+{
+	t_lst	*new;
+
+	new = (t_lst*)malloc(sizeof(t_lst));
+	if (!new)
+		return (NULL);
+	new->name = ft_strdup(name);
+	new->place = flag;
+	new->ants = 0;
+	new->amount = 0;
+	new->links = ft_strnew(0);
+	new->next = NULL;
+	return (new);
+}
+
+void		create_list(t_lst **start, char *line, int flag)
+{
+	char	*name;
+	t_lst	*p;
+
+	name = get_name(line, ' ');
+	p = *start;
+	if (!*start)
+		*start = new_lst(name, flag);
+	else
+	{
+		while (p)
+		{
+			if (p->next == NULL)
+			{
+				p->next = new_lst(name, flag);
+				break ;
+			}
+			p = p->next;
+		}
+	}
+	ft_strdel(&name);
+}
+
+void		set_links(t_lst **start, char *name, char *s_name)
+{
+	t_lst	*p;
+	char	*t;
+	int		f;
+
+	f = 0;
+	p = *start;
+	while (p)
+	{
+		if (ft_strcmp(name, p->name) == 0)
+		{
+			t = p->links;
+			p->links = ft_strjoin(p->links, s_name);
+			free(t);
+			t = p->links;
+			p->links = ft_charjoin(p->links, '|');
+			free(t);
+			p->amount++;
+			f++;
+		}
+		p = p->next;
+	}
+	if (f == 0)
+		ft_exit(2);
+}
+
+void		get_links(t_lst **start, char *line)
+{
+	char	*name;
+	char	*s_name;
+	char	*line2;
+
+	line2 = ft_strdup(line);
+	name = get_name(line, '-');
+	s_name = get_name(line2, 'z');
+	set_links(start, name, s_name);
+	set_links(start, s_name, name);
+	ft_strdel(&line2);
+	ft_strdel(&name);
+}

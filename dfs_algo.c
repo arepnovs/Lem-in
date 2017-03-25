@@ -6,22 +6,11 @@
 /*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/22 12:34:40 by arepnovs          #+#    #+#             */
-/*   Updated: 2017/03/24 16:05:39 by arepnovs         ###   ########.fr       */
+/*   Updated: 2017/03/25 15:21:21 by arepnovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-int		loc_dest(t_lst *start)
-{
-	while (start)
-	{
-		if (start->place == 9)
-			return (start->pos);
-		start = start->next;
-	}
-	return (0);
-}
 
 void	get_stack_elements(int indx, int *way, t_dfs *path)
 {
@@ -74,9 +63,12 @@ void	all_paths_search(int **matrix, t_lst *start)
 	ft_memset(path.visited, 0, sizeof(path.visited));
 	remember_path(0, path.dest, &path, matrix);
 	if (path.all_paths[0])
-		choose_path(&path, start);//1 leaks
+		choose_path(&path, start);
 	else
-		printf("Impossible to reach destination\n");
-  free_dfs(&path);
-  free(path.best_paths);
+	{
+		ft_putstr("Impossible to reach destination\n");
+		ft_exit(1);
+	}
+	free_dfs(&path);
+	free(path.best_paths);
 }

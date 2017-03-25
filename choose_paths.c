@@ -12,16 +12,6 @@
 
 #include "lemin.h"
 
-int		path_len(int *path, int dest)
-{
-	int	i;
-
-	i = 0;
-	while (path[i] != dest)
-		i++;
-	return (i + 1);
-}
-
 int		*all_len(int **p, t_dfs *path)
 {
 	int	i;
@@ -37,7 +27,7 @@ int		*all_len(int **p, t_dfs *path)
 	return (p_len);
 }
 
-int		check_rep(int *a, int **b, int p, int dest)
+int		if_repeat(int *a, int **b, int p, int dest)
 {
 	int i;
 	int j;
@@ -75,12 +65,14 @@ void	choose_more_paths(t_lst *start, t_dfs *p, int j, int i)
 		while (i < p->i)
 		{
 			if (p->all_paths[i][1] != p->best_paths[j - 1][1]
-				&& check_rep(p->all_paths[i], p->best_paths, j, p->dest) != 0
+				&& if_repeat(p->all_paths[i], p->best_paths, j, p->dest) != 0
 				&& (len = path_len(p->all_paths[i], p->dest)) < new_len)
 			{
-				if (j)
+				if (j && len != 2)
+				{
 					new_len = len;
-				p->best_paths[j] = p->all_paths[i];
+					p->best_paths[j] = p->all_paths[i];
+				}
 			}
 			i++;
 		}
@@ -89,7 +81,8 @@ void	choose_more_paths(t_lst *start, t_dfs *p, int j, int i)
 		j++;
 	}
 	p->amount = j;
-	print_path(start, p); //1 leaks after*/
+	show_best_paths(p, start);
+	print_path(start, p);
 }
 
 void	choose_path(t_dfs *p, t_lst *start)

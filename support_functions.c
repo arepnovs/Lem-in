@@ -12,45 +12,49 @@
 
 #include "lemin.h"
 
-void		ft_exit(void)
+void	ft_exit(int f)
 {
-	printf("ERROR INPUT\n");
+	if (f < 0)
+		ft_putstr("ERROR INPUT\n");
+	else if (f == 0)
+		ft_putstr("No ants to move\n");
+	else if (f == 2)
+		ft_putstr("Not valid room\n");
 	exit(0);
 }
 
-void		need_next_line(char **line)
+int		lst_len(t_lst *start)
 {
-	printf("%s\n", *line);
-	free(*line);
+	int i;
+
+	i = 0;
+	while (start)
+	{
+		i++;
+		start = start->next;
+	}
+	return (i);
 }
 
-char		*get_name(char *line, char f)
+int		loc_dest(t_lst *start)
 {
-	char *t;
-	char *name;
-	char *s_name;
+	while (start)
+	{
+		if (start->place == 9)
+			return (start->pos);
+		start = start->next;
+	}
+	return (0);
+}
 
-	if (f == ' ' || f == '-')
-	{
-		t = (f == ' ') ? ft_strchr(line, ' ') : ft_strchr(line, '-');
-		*t = '\0';
-		t++;
-		while (*t)
-		{
-			if ((*t < '0' || *t > '9') && *t != ' ' && f == ' ')
-				ft_exit();
-			t++;
-		}
-		line = ft_strdup(line);
-		return (line);
-	}
-	else
-	{
-		t = ft_strchr(line, '-');
-		t++;
-		line = t;
-		return (line);
-	}
+int		path_len(int *path, int dest)
+{
+	int	i;
+
+	i = 0;
+	while (path[i] != dest)
+		i++;
+	return (i + 1);
 }
 
 char	*restore_name(t_lst *start, int place)
@@ -65,19 +69,4 @@ char	*restore_name(t_lst *start, int place)
 		p = p->next;
 	}
 	return (p->name);
-}
-
-void		get_links(t_lst **start, char *line)
-{
-	char	*name;
-	char	*s_name;
-	char	*line2;
-
-	line2 = ft_strdup(line);
-	name = get_name(line, '-');
-	s_name = get_name(line2, 'z');
-	set_links(start, name, s_name);
-	set_links(start, s_name, name);
-	ft_strdel(&line2);
-	ft_strdel(&name);
 }
