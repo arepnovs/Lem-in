@@ -17,9 +17,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "libft/libft.h"
-//# include "alala/ft_printf.h"
-//# include "priii/printf.h"
-//# include "libft/ft_printf/printf.h"
 
 typedef struct		s_lst
 {
@@ -31,6 +28,8 @@ typedef struct		s_lst
 	int				amount;
 	int				place;
 	int				ants;
+	int				f;
+	int				temp;
 	struct s_lst	*next;
 }					t_lst;
 
@@ -44,6 +43,8 @@ typedef struct		s_dfs
 	int				**best_paths;
 	int				amount;
 	int				*visited;
+	int				*stop;
+	int				f;
 	int				i;
 	int				l;
 	int				vert;
@@ -53,11 +54,14 @@ typedef struct		s_dfs
 //main_read.c
 void				need_next_line(char **line);
 int					start_end_read(char **line);
-void				validation(char *line);
 void				solve(t_lst *start, int ants);
+void				print_line(char *line);
 int					main(void);
+//validation.c
+void				ft_exit(int f);
+void				validation(char *line);
+void				start_end_check(t_lst *start);
 //organize_info1.c
-void				put_move(int ant, char *name, int i);
 t_lst				*new_lst(char *name, int flag);
 void				create_list(t_lst **start, char *line, int flag);
 void				set_links(t_lst **start, char *name, char *s_name);
@@ -69,7 +73,7 @@ void				org_pos(t_lst **start);
 t_lst				*org_path(t_lst **start);
 void				set_ants(t_lst **start, int ants);
 //support_functions.c
-void				ft_exit(int f);
+void				free_dfs(t_dfs *path);
 int					lst_len(t_lst *start);
 int					loc_dest(t_lst *start);
 int					path_len(int *path, int dest);
@@ -84,18 +88,19 @@ void				remember_path(int start, int dest, t_dfs *path,
 	int **matrix);
 void				all_paths_search(int **matrix, t_lst *start);
 //choose_paths.c
+int					**dup_zero(int **p, t_dfs *path);
 int					*all_len(int **p, t_dfs *path);
 int					if_repeat(int *a, int **b, int p, int dest);
 void				choose_more_paths(t_lst *start, t_dfs *p, int j, int i);
 void				choose_path(t_dfs *p, t_lst *start);
 //print_path.c
-int					**dup_zero(int **p, t_dfs *path);
-void				free_dfs(t_dfs *path);
-int					print_move(int len, int **ants, t_dfs *path, t_lst *start);
+
+void				print_move(int len, int **ants, t_dfs *path, t_lst *start);
 int					actually_print_path(t_lst *start, t_dfs *path, int **ants,
 	int *len);
 void				print_path(t_lst *start, t_dfs *path);
 
 void				show_best_paths(t_dfs *p, t_lst *start);
+void				put_move(int ant, char *name, int i);
 
 #endif

@@ -12,15 +12,23 @@
 
 #include "lemin.h"
 
-void	ft_exit(int f)
+void	free_dfs(t_dfs *path)
 {
-	if (f < 0)
-		ft_putstr("ERROR INPUT\n");
-	else if (f == 0)
-		ft_putstr("No ants to move\n");
-	else if (f == 2)
-		ft_putstr("Not valid room\n");
-	exit(0);
+	int		i;
+	t_dfs	*p;
+
+	i = 0;
+	p = path;
+	free(p->path);
+	while (i < 10000)
+	{
+		free(p->all_paths[i]);
+		i++;
+	}
+	i = 0;
+	free(p->stop);
+	free(p->all_paths);
+	free(p->visited);
 }
 
 int		lst_len(t_lst *start)

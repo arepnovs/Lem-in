@@ -12,34 +12,6 @@
 
 #include "lemin.h"
 
-void		put_move(int ant, char *name, int i)
-{
-	if (i == 0)
-		ft_putstr("\x1B[39m");
-	else if (i == 1)
-		ft_putstr("\x1B[32m");
-	else if (i == 2)
-		ft_putstr("\x1B[33m");
-	else if (i ==3)
-		ft_putstr("\x1B[31m");
-	else if (i == 4)
-		ft_putstr("\x1B[34m");
-	else if (i == 5)
-		ft_putstr("\x1B[35m");
-	else if (i == 6)
-		ft_putstr("\x1B[36m");
-	else if (i == 7)
-		ft_putstr("\x1B[37m");
-	else if (i == 8)
-		ft_putstr("\x1B[38m");
-	ft_putstr("L");
-	ft_putnbr(ant);
-	ft_putstr("->");
-	ft_putstr(name);
-	ft_putstr(" ");
-	ft_putstr("\x1B[0m");
-}
-
 t_lst		*new_lst(char *name, int flag)
 {
 	t_lst	*new;
@@ -61,6 +33,8 @@ void		create_list(t_lst **start, char *line, int flag)
 	char	*name;
 	t_lst	*p;
 
+	if (ft_strchr(line, '-'))
+		ft_exit(-1);
 	name = get_name(line, ' ');
 	p = *start;
 	if (!*start)
@@ -113,6 +87,8 @@ void		get_links(t_lst **start, char *line)
 	char	*s_name;
 	char	*line2;
 
+	if (!(*start))
+		ft_exit(-1);
 	line2 = ft_strdup(line);
 	name = get_name(line, '-');
 	s_name = get_name(line2, 'z');

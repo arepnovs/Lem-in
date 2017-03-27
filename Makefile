@@ -4,6 +4,7 @@ NAME = lem-in
 FLAGS =	-Wall -Wextra -Werror 
 
 SRC =	main_read.c\
+		validation.c\
 		organize_info1.c\
 		organize_info2.c\
 		support_functions.c\
@@ -21,7 +22,8 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 		@echo "-----------------------------------"
-		
+		@echo "Compiling libft"
+		@$(MAKE) -C ./libft
 		@echo "-----------------------------------"
 		@echo "Compiling lem-in"
 		@gcc $(FLAGS) -g -c $(SRC)
@@ -30,24 +32,16 @@ $(NAME): $(SRC)
 		@echo "lem-in is ready"
 clean:
 	@rm -f *.o
-	
+	@$(MAKE) clean -C ./libft
 	@echo "-----------------------------------"
 	@echo "Objects successfully removed"
 fclean:	
 	@make clean
 	@rm -f $(NAME)
-	
+	@$(MAKE) fclean -C ./libft
 	@echo "-----------------------------------"
 	@echo "lem-in successfully destroyed"
 
 re: 
 	@make fclean
 	@make all
-aoo:
-	@echo "Compiling libft"
-		@$(MAKE) -C ./libft
-
-		@$(MAKE) clean -C ./libft
-
-		@$(MAKE) fclean -C ./libft
-

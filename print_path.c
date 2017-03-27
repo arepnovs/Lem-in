@@ -12,54 +12,10 @@
 
 #include "lemin.h"
 
-int		**dup_zero(int **p, t_dfs *path)
+void	print_move(int len, int **ants, t_dfs *path, t_lst *start)
 {
-	int i;
-	int j;
-	int len;
-	int **ants;
-
-	i = 0;
-	ants = (int **)malloc(sizeof(int*) * path->amount + 1);
-	while (i < path->amount)
-	{
-		j = 0;
-		len = path_len(p[i], path->dest);
-		path->all_len = path->all_len + len;
-		ants[i] = (int *)malloc(sizeof(int) * len);
-		while (p[i][j - 1] != path->dest)
-		{
-			ants[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
-	return (ants);
-}
-
-void	free_dfs(t_dfs *path)
-{
-	int		i;
-	t_dfs	*p;
-
-	i = 0;
-	p = path;
-	free(p->path);
-	while (i < 10000)
-	{
-		free(p->all_paths[i]);
-		i++;
-	}
-	free(p->all_paths);
-	free(p->visited);
-}
-
-int		print_move(int len, int **ants, t_dfs *path, t_lst *start)
-{
-	int		f;
 	char	*name;
 
-	f = 0;
 	while (len > 0)
 	{
 		if (ants[0][len - 1] != 0)
@@ -67,49 +23,82 @@ int		print_move(int len, int **ants, t_dfs *path, t_lst *start)
 			ants[0][len] = ants[0][len - 1];
 			name = restore_name(start, path->best_paths[path->l][len]);
 			put_move(ants[0][len], name, path->l);
-			f++;
+			path->f++;
 			ants[0][len - 1] = 0;
 		}
 		len--;
 	}
-	return (f);
+}
+
+int		*when_stop(t_dfs *path, int *len, t_lst *start)
+{
+	int i;
+	int *stop;
+
+	i = -1;
+	stop = (int *)malloc(sizeof(int) * path->amount + 1);
+	while (++i < path->amount + 1)
+		stop[i] = 0;
+	i = 0;
+	while (i < path->amount)
+	{
+		if (len[i] > 0)
+		{
+			if (i > 1)
+				stop[i] = stop[i - 1] + len[i] - len[i - 1] + i - 1;
+			else if (i == 1)
+				stop[i] = len[1] - len[0];
+		}
+		i++;
+	}
+	i = -1;
+	while (++i < path->amount)
+		stop[i] = (i == 0) ? start->ants : start->ants - stop[i];
+	return (stop);
+}
+
+void	print_put(t_lst *start, t_dfs *path, int i, int **ants)
+{
+	char *name;
+
+	if (ants[i][1] == 0 && path->ant <= path->stop[i])
+	{
+		if (path->ant <= start->ants)
+		{
+			ants[i][1] = path->ant;
+			name = restore_name(start, path->best_paths[i][1]);
+			put_move(ants[i][1], name, i);
+			path->f++;
+		}
+		path->ant++;
+	}
+	else if (path->best_paths[i][1] == path->dest
+		&& ants[i][1] != 0 && path->ant <= path->stop[i])
+	{
+		if (path->ant <= start->ants)
+		{
+			ants[i][1] = path->ant;
+			name = restore_name(start, path->best_paths[i][1]);
+			put_move(ants[i][1], name, i);
+		}
+		path->ant++;
+	}
 }
 
 int		actually_print_path(t_lst *start, t_dfs *path, int **ants, int *len)
 {
-	int		f;
-	char	*name;
-
-	f = 0;
+	path->f = 0;
 	while (path->l < path->amount)
 	{
-		f = print_move(len[path->l], &ants[path->l], path, start);
-		if (ants[path->l][1] == 0)
-		{
-			if (path->ant <= start->ants)
-			{
-				ants[path->l][1] = path->ant;
-				name = restore_name(start, path->best_paths[path->l][1]);
-				put_move(ants[path->l][1], name, path->l);
-				f++;
-			}
-			path->ant++;
-		}
-		else if (path->best_paths[path->l][1] == path->dest && ants[path->l][1] != 0)
-		{
-			if (path->ant <= start->ants)
-			{
-				ants[path->l][1] = path->ant;
-				name = restore_name(start, path->best_paths[path->l][1]);
-				put_move(ants[path->l][1], name, path->l);
-			}
-			path->ant++;
-		}
+		print_move(len[path->l], &ants[path->l], path, start);
+		print_put(start, path, path->l, ants);
 		path->l++;
 	}
-	if (f != 0)
+	if (path->f != 0)
 		ft_putstr("\n");
-	f = 0;
+	else
+		path->ant++;
+	path->f = 0;
 	path->l = 0;
 	return (path->ant);
 }
@@ -123,8 +112,9 @@ void	print_path(t_lst *start, t_dfs *path)
 	path->ant = 1;
 	ants = dup_zero(path->best_paths, path);
 	len = all_len(path->best_paths, path);
+	path->stop = when_stop(path, len, start);
 	ft_putstr("\n");
-	while (path->ant < start->ants + path->all_len)
+	while (path->ant <= start->ants + start->ants + path->all_len)
 		path->ant = actually_print_path(start, path, ants, len);
 	path->l = -1;
 	while (++path->l < path->amount)
