@@ -14,6 +14,7 @@ $(NAME): $(SRC)
 
 clean :
 	@rm -f $(OBJ)
+	@rm -f ._*
 
 fclean: clean
 	@rm -f $(NAME)

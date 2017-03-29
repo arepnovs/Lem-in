@@ -74,7 +74,7 @@ void	show_best_paths(t_dfs *p, t_lst *start)
 
 	i = 0;
 	ft_putstr("\n");
-	ft_putstr("Best paths\n");
+	ft_putstr("Best possible paths\n");
 	while (i < p->amount)
 	{
 		j = 0;

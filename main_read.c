@@ -81,6 +81,5 @@ int			main(void)
 		ft_strdel(&line);
 	}
 	solve(start, ants);
-	//sleep(20);
 	return (0);
 }

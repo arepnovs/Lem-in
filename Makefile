@@ -40,7 +40,7 @@ fclean:
 	@rm -f $(NAME)
 	@$(MAKE) fclean -C ./libft
 	@echo "-----------------------------------"
-	@echo "lem-in successfully destroyed"
+	@echo "lem-in successfully removed"
 
 re: 
 	@make fclean
