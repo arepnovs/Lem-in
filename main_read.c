@@ -23,7 +23,10 @@ int			start_end_read(char **line)
 {
 	int f;
 
-	f = (line[0][2] == 's') ? 1 : 9;
+	if (ft_strcmp(*line, "##start") == 0)
+	    f = 1;
+	else if (ft_strcmp(*line, "##end") == 0)
+	    f = 9;
 	while (line[0][0] == '#')
 	{
 		free(*line);
@@ -66,8 +69,8 @@ int			main(void)
 	while ((get_next_line(0, &line)) > 0)
 	{
 		print_line(line);
-		if (line[1] == '#' && (ft_strstr(line, "start")
-			|| ft_strstr(line, "end")))
+		if (line[1] == '#' && (ft_strcmp(line, "##start") == 0
+			|| ft_strcmp(line, "##end") == 0))
 		{
 			f = start_end_read(&line);
 			create_list(&start, line, f);
