@@ -3,7 +3,7 @@ Ants! Ants everywhere!!!
 
 Usage: ./lem-in < ant_farms_examples/test[number of test]
 
-Project goal is to read the given ant-farm (kind of graph) and find the best possible ways to move all ants from start to end in the shortest amount of time and moves.
+Project goal is to read the given ant-farm (kind of graph) and find the best possible ways to move all ants from start to end in the shortest amount of time and moves. (See lem-in.en.pdf)
 
 Short rules:
 
