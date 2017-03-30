@@ -1,0 +1,17 @@
+#room names not numbers
+9
+##start
+aaaaaaaa 2 2
+bbbbbbbb 25 8
+cccccccc 16 7
+dddddddd 4 8
+##end
+eeeeeeee 16 3
+aaaaaaaa-bbbbbbbb
+aaaaaaaa-cccccccc
+bbbbbbbb-cccccccc
+bbbbbbbb-dddddddd
+bbbbbbbb-eeeeeeee
+cccccccc-bbbbbbbb
+cccccccc-dddddddd
+dddddddd-eeeeeeee

@@ -1,0 +1,49 @@
+#many tricky commands and comments
+20
+##start
+0 2 2
+1 25 8
+2 16 7
+##starts
+#comment
+3 4 8
+#comment
+4 16 3
+5 1 5
+#smfasdgsdgasdgadgasdgasd
+#asdgasdggadsgadsg
+#start
+6 9 3
+##endw
+7 16 5
+##sdgasdggadsgadsg
+8 1 5
+9 9 3
+#end
+10 25 2
+##end
+11 9 5
+12 5 6
+13 2 8
+0-1
+0-2
+0-3
+0-12
+1-5
+1-4
+2-6
+3-6
+#asdgasdggadsgadsg
+3-9
+3-12
+5-7
+4-8
+4-11
+6-8
+9-10
+9-12
+7-11
+10-11
+12-13
+13-11
+##wendw
