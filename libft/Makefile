@@ -9,6 +9,8 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(SRC)
+	@echo "-----------------------------------"
+	@echo "Compiling libft"
 	@gcc -c $(FLAGS) $(SRC)
 	@ar rc $(NAME) $(OBJ)
 

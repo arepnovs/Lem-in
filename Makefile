@@ -21,17 +21,15 @@ SRO  =  $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(SRC)
-		@echo "-----------------------------------"
-		@echo "Compiling libft"
 		@$(MAKE) -C ./libft
 		@echo "-----------------------------------"
 		@echo "Compiling lem-in"
-		@gcc $(FLAGS) -g -c $(SRC)
-		@gcc $(FLAGS) -o $(NAME) $(SRC) $(LIBFT)
+		@gcc $(FLAGS) -c $(SRC)
+		@gcc $(FLAGS) -o $(NAME) $(SRO) $(LIBFT)
 		@echo "-----------------------------------"
 		@echo "lem-in is ready"
 clean:
-	@rm -f *.o
+	@rm -f $(SRO)
 	@$(MAKE) clean -C ./libft
 	@echo "-----------------------------------"
 	@echo "Objects successfully removed"

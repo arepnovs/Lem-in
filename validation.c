@@ -20,6 +20,8 @@ void		ft_exit(int f)
 		ft_putstr("No ants to move\n");
 	else if (f == 2)
 		ft_putstr("Not valid room\n");
+	else if (f == 3)
+		ft_putstr("Usage: ./lem-in < [path to ant-farm_file]\n");
 	exit(0);
 }
 

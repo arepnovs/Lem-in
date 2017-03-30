@@ -114,7 +114,8 @@ void	print_path(t_lst *start, t_dfs *path)
 	len = all_len(path->best_paths, path);
 	path->stop = when_stop(path, len, start);
 	ft_putstr("\n");
-	while (path->ant <= (unsigned long)(start->ants + path->all_len))
+	while ((unsigned long)path->ant <= (unsigned long)(start->ants
+		+ path->all_len))
 		path->ant = actually_print_path(start, path, ants, len);
 	path->l = -1;
 	while (++path->l < path->amount)

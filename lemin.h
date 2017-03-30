@@ -53,7 +53,7 @@ typedef struct		s_dfs
 void				need_next_line(char **line);
 int					start_end_read(char **line);
 void				solve(t_lst *start, int ants);
-void				print_line(char *line);
+void				print_line(char *line, int f);
 int					main(void);
 void				ft_exit(int f);
 void				validation(char *line);

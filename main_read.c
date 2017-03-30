@@ -24,9 +24,9 @@ int			start_end_read(char **line)
 	int f;
 
 	if (ft_strcmp(*line, "##start") == 0)
-	    f = 1;
+		f = 1;
 	else if (ft_strcmp(*line, "##end") == 0)
-	    f = 9;
+		f = 9;
 	while (line[0][0] == '#')
 	{
 		free(*line);
@@ -51,8 +51,10 @@ void		solve(t_lst *start, int ants)
 	matrix(&start);
 }
 
-void		print_line(char *line)
+void		print_line(char *line, int f)
 {
+	if (line[0] == '\0' && f == 6)
+		ft_exit(3);
 	ft_putstr(line);
 	ft_putstr("\n");
 	validation(line);
@@ -65,10 +67,10 @@ int			main(void)
 	int		ants;
 	int		f;
 
-	f = 0;
+	f = 6;
 	while ((get_next_line(0, &line)) > 0)
 	{
-		print_line(line);
+		print_line(line, f);
 		if (line[1] == '#' && (ft_strcmp(line, "##start") == 0
 			|| ft_strcmp(line, "##end") == 0))
 		{
