@@ -1,8 +1,6 @@
-#random start/end declaration
+#ordinar ant-farm
 16
 2 16 7
-##end
-0 9 5
 #comment
 3 16 3
 4 16 5
@@ -10,6 +8,8 @@
 ##start
 1 23 3
 6 1 5
+##end
+0 9 5
 7 4 8
 0-4
 0-6

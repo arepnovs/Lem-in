@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "lemin.h"
+#include <stdio.h>
 
 char	*get_name(char *line, char f)
 {

@@ -59,7 +59,7 @@ void	matrix(t_lst **start)
 	int		**matrix;
 	int		i;
 
-	p1 = *start;
+	//p1 = *start;
 	len = lst_len(*start);
 	p1->vert = len;
 	matrix = (int**)malloc(sizeof(int*) * len);
@@ -74,5 +74,7 @@ void	matrix(t_lst **start)
 	i = -1;
 	while (++i < p1->vert)
 		free(matrix[i]);
+	free(p1->name);
+	free(p1->links);
 	free(matrix);
 }
