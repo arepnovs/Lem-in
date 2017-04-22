@@ -80,6 +80,7 @@ void	print_put(t_lst *start, t_dfs *path, int i, int **ants)
 			ants[i][1] = path->ant;
 			name = restore_name(start, path->best_paths[i][1]);
 			put_move(ants[i][1], name, i);
+			path->f++;
 		}
 		path->ant++;
 	}

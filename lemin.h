@@ -6,7 +6,7 @@
 /*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 15:24:36 by arepnovs          #+#    #+#             */
-/*   Updated: 2017/03/25 15:27:00 by arepnovs         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:49:37 by arepnovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,9 @@ int					actually_print_path(t_lst *start, t_dfs *path, int **ants,
 void				print_path(t_lst *start, t_dfs *path);
 void				show_best_paths(t_dfs *p, t_lst *start);
 void				put_move(int ant, char *name, int i);
+int					check_name_with_dash(char *line);
+int					is_ok_name(t_lst *start, char *line);
+char				*id_first_dash_name_in_link(t_lst *start, char *line);
+char				*id_second_dash_name_in_link(char *line, char *f_name);
 
 #endif

@@ -51,8 +51,6 @@ void		solve(t_lst *start, int ants)
 	set_ants(&start, ants);
 	start = org_path(&start);
 	matrix(&start);
-	//free(start->llinks);
-	//free(start);
 }
 
 void		print_line(char *line, int f)
@@ -61,7 +59,7 @@ void		print_line(char *line, int f)
 		ft_exit(3);
 	ft_putstr(line);
 	ft_putstr("\n");
-	//validation(line);
+	validation(line);
 }
 
 int			main(void)
@@ -81,14 +79,12 @@ int			main(void)
 			f = start_end_read(&line);
 			create_list(&start, line, f);
 		}
-		else if (ft_strchr(line, '-') && !ft_strchr(line, ' ') && line[0] != '#')
-			get_links(&start, line);
 		else if (ft_strchr(line, ' ') && line[0] != '#' && line[0] != 'L')
 			create_list(&start, line, 0);
+		else if (ft_strchr(line, '-') && line[0] != '#')
+			get_links(&start, line);
 		else if (!ft_strchr(line, ' ') && line[0] >= '0' && line[0] <= '9')
 			ants = ft_atoi(line);
-		else if (line[0] == 'b')
-			break;
 		ft_strdel(&line);
 	}
 	solve(start, ants);

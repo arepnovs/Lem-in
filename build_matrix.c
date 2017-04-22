@@ -59,7 +59,7 @@ void	matrix(t_lst **start)
 	int		**matrix;
 	int		i;
 
-	//p1 = *start;
+	p1 = *start;
 	len = lst_len(*start);
 	p1->vert = len;
 	matrix = (int**)malloc(sizeof(int*) * len);
@@ -69,7 +69,6 @@ void	matrix(t_lst **start)
 		matrix[i] = get_row(*start, i, len);
 		i++;
 	}
-	p1 = *start;
 	all_paths_search(matrix, p1);
 	i = -1;
 	while (++i < p1->vert)

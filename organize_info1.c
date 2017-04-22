@@ -6,7 +6,7 @@
 /*   By: arepnovs <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 15:18:58 by arepnovs          #+#    #+#             */
-/*   Updated: 2017/03/25 15:19:45 by arepnovs         ###   ########.fr       */
+/*   Updated: 2017/04/21 15:06:20 by arepnovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,84 +79,6 @@ void		set_links(t_lst **start, char *name, char *s_name)
 		ft_exit(2);
 }
 
-int check_name_with_dash(char *line)
-{
-	int i;
-	int dash;
-
-	i = 0;
-	dash = 0;
-	while(line[i])
-	{
-		if (line[i] == '-')
-			dash++;
-		i++;
-	}
-	return (dash > 1) ? 1 : 0;
-}
-
-int 	is_ok_name(t_lst *start, char *line)
-{
-	t_lst *t;
-
-	t = start;
-	while (t)
-	{
-		if (ft_strcmp(t->name, line) == 0)
-			return (1);
-		t = t->next;
-	}
-	return (-1);	
-}
-
-char *id_first_dash_name_in_link(t_lst *start, char *line)
-{
-	char *name;
-	char *t;
-	int i;
-	int ok;
-
-	ok = -1;
-	i = 0;
-	while (ok < 0)
-	{
-		while (line[i])
-		{
-			if (line[i] == '-')
-				break;
-			i++;
-		}
-		name = ft_strnew(i);
-		name = strncpy(name, line, i);
-		i++;
-		if ((ok = is_ok_name(start, name)) < 0)
-			ft_strdel(&name);
-	}
-	return(name);
-}
-
-char *id_second_dash_name_in_link(t_lst *start, char *line, char *f_name)
-{
-	char *name;
-	int i;
-	int len;
-
-	i = 0;
-	len = ft_strlen(line);
-	while (line[i] == f_name[i])
-		i++;
-	i++;
-	name = ft_strnew(len - i);
-	len = 0;
-	while (line[i])
-	{
-		name[len] = line[i];
-		len++;
-		i++;
-	}
-	return(name);
-}
-
 void		get_links(t_lst **start, char *line)
 {
 	char	*name;
@@ -170,14 +92,17 @@ void		get_links(t_lst **start, char *line)
 	{
 		name = get_name(line, '-');
 		s_name = get_name(line2, 'z');
+		set_links(start, name, s_name);
+		set_links(start, s_name, name);
 	}
 	else
 	{
 		name = id_first_dash_name_in_link(*start, line);
-		s_name = id_second_dash_name_in_link(*start, line, name);
+		s_name = id_second_dash_name_in_link(line, name);
+		set_links(start, name, s_name);
+		set_links(start, s_name, name);
+		ft_strdel(&s_name);
 	}
-	set_links(start, name, s_name);
-	set_links(start, s_name, name);
 	ft_strdel(&line2);
 	ft_strdel(&name);
 }

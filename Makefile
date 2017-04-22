@@ -7,6 +7,7 @@ SRC =	main_read.c\
 		validation.c\
 		organize_info1.c\
 		organize_info2.c\
+		dash_names_check.c\
 		support_functions.c\
 		build_matrix.c\
 		dfs_algo.c\
