@@ -33,6 +33,7 @@ void		create_list(t_lst **start, char *line, int flag)
 	char	*name;
 	t_lst	*p;
 
+	one_more_validation(line);
 	name = get_name(line, ' ');
 	p = *start;
 	if (!*start)

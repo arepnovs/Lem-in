@@ -17,4 +17,4 @@ Short rules:
 
 5. Any non compliant or empty lines will automatically stop the ant farm’s reading and program displays error message
 
-6. In no way can program quit in an unexpected manner (segfault, bus error, double free, etc)
+6. In no way can your program quit in an unexpected manner (segfault, bus error, double free, etc)

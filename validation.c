@@ -25,6 +25,23 @@ void		ft_exit(int f)
 	exit(0);
 }
 
+void		one_more_validation(char *line)
+{
+	int i;
+	int f;
+
+	i = 0;
+	f = 0;
+	while (line[i])
+	{
+		if (line[i] == ' ' && i > 0 && line[i - 1] != ' ' && line[i + 1] != ' ')
+			f++;
+		i++;
+	}
+	if (f != 2)
+		ft_exit(2);
+}
+
 void		validation(char *line)
 {
 	int i;
