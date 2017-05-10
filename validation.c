@@ -15,13 +15,13 @@
 void		ft_exit(int f)
 {
 	if (f < 0)
-		ft_putstr("ERROR INPUT\n");
+		ft_putstr_fd("ERROR INPUT\n", 2);
 	else if (f == 0)
-		ft_putstr("No ants to move\n");
+		ft_putstr_fd("No ants to move\n", 2);
 	else if (f == 2)
-		ft_putstr("Not valid room\n");
+		ft_putstr_fd("Not valid room\n", 2);
 	else if (f == 3)
-		ft_putstr("Usage: ./lem-in < [path to ant-farm_file]\n");
+		ft_putstr_fd("Usage: ./lem-in < [path to ant-farm_file]\n", 2);
 	exit(0);
 }
 
